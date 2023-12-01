@@ -1,0 +1,38 @@
+create database ventas;
+use ventas;
+
+CREATE TABLE clientes(
+	id int primary key auto_increment,
+    nombre varchar(75),
+    apellido varchar(75),
+    numero_documento varchar(11)
+    fecha_nacimiento date
+);
+
+CREATE TABLE productos(
+	id int primary key auto_increment,
+    descripcion varchar (150),
+    codigo varchar (50),
+    stock int,
+    precio decimal (10,2)
+);
+
+CREATE TABLE factura(
+	id int primary key auto_increment,
+    clientes_id int,
+    fecha_creacion datetime,
+    total double,
+
+    CONSTRAINT fk_clientes_id foreign key (clientes_id) references clientes(id)
+);
+
+CREATE TABLE detalle_factura(
+	id int primary key auto_increment,
+    factura_id int,
+    cantidad_productos int,
+    productos_id int,
+    importe double,
+
+	constraint fk_factura_id foreign key (factura_id) references factura(id),
+    constraint fk_productos_id foreign key (productos_id) references productos(id)
+);
